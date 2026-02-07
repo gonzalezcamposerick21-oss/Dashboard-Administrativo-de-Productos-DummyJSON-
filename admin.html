@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - ShopMaster</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Administración</h1>
+        
+        <!-- Controles -->
+        <div class="controles">
+            <input type="text" id="buscar" placeholder="Buscar...">
+            <button onclick="buscar()">Buscar</button>
+            
+            <select id="categoria" onchange="filtrarCategoria()">
+                <option value="">Todas las categorías</option>
+            </select>
+            
+            <select id="ordenar" onchange="ordenar()">
+                <option value="">Sin ordenar</option>
+                <option value="title-asc">Título A-Z</option>
+                <option value="title-desc">Título Z-A</option>
+                <option value="price-asc">Precio ↑</option>
+                <option value="price-desc">Precio ↓</option>
+            </select>
+            
+            <a href="nuevoproducto.html">
+                <button>+ Nuevo Producto</button>
+            </a>
+        </div>
+
+        <!-- Tabla -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Imagen</th>
+                    <th>Título</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla">
+                <!-- Productos aquí -->
+            </tbody>
+        </table>
+
+        <!-- Paginación -->
+        <div class="paginacion">
+            <button onclick="anterior()" id="btnAnterior">Anterior</button>
+            <span id="info">Página 1</span>
+            <button onclick="siguiente()" id="btnSiguiente">Siguiente</button>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

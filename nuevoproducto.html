@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Producto</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Agregar Nuevo Producto</h1>
+        
+        <form id="form">
+            <div>
+                <label>Título:</label>
+                <input type="text" id="titulo" required>
+            </div>
+            
+            <div>
+                <label>Precio:</label>
+                <input type="number" id="precio" step="0.01" required>
+            </div>
+            
+            <div>
+                <label>Descripción:</label>
+                <textarea id="descripcion"></textarea>
+            </div>
+            
+            <div>
+                <label>Stock:</label>
+                <input type="number" id="stock" required>
+            </div>
+            
+            <button type="submit">Guardar</button>
+            <a href="admin.html"><button type="button">Cancelar</button></a>
+        </form>
+        
+        <div id="resultado" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        document.getElementById('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const producto = {
+                title: document.getElementById('titulo').value,
+                price: parseFloat(document.getElementById('precio').value),
+                description: document.getElementById('descripcion').value,
+                stock: parseInt(document.getElementById('stock').value)
+            };
+            
+            const res = await fetch('https://dummyjson.com/products/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(producto)
+            });
+            
+            const data = await res.json();
+            
+            document.getElementById('resultado').innerHTML = `
+                <p style="color: green;"> Producto creado con ID: ${data.id}</p>
+                <p>Título: ${data.title}</p>
+                <p>Precio: $${data.price}</p>
+            `;
+            
+            document.getElementById('form').reset();
+        });
+    </script>
+</body>
+</html>
