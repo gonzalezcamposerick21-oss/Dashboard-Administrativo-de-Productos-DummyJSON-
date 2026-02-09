@@ -1,17 +1,14 @@
-// Variables
 let salto = 0;
 let total = 0;
 let busqueda = '';
 let categoriaActual = '';
 let ordenActual = '';
 
-// Cargar productos al iniciar
 window.onload = function() {
     cargarCategorias();
     cargarProductos();
 };
 
-// Cargar categorías
 async function cargarCategorias() {
     const res = await fetch('https://dummyjson.com/products/category');
     const cats = await res.json();
@@ -25,20 +22,16 @@ async function cargarCategorias() {
     });
 }
 
-// Cargar productos
 async function cargarProductos() {
     let url = 'https://dummyjson.com/products?limit=10&skip=' + salto;
     
-    // Si hay búsqueda
     if (busqueda) {
         url = `https://dummyjson.com/products/search?q=${busqueda}&limit=10&skip=${salto}`;
     }
-    // Si hay categoría
     else if (categoriaActual) {
         url = `https://dummyjson.com/products/category/${categoriaActual}?limit=10&skip=${salto}`;
     }
     
-    // Si hay ordenamiento
     if (ordenActual) {
         const [campo, orden] = ordenActual.split('-');
         const separador = url.includes('?') ? '&' : '?';
@@ -53,7 +46,6 @@ async function cargarProductos() {
     actualizarPaginacion();
 }
 
-// Mostrar productos en tabla
 function mostrarProductos(productos) {
     const tabla = document.getElementById('tabla');
     tabla.innerHTML = '';
@@ -75,7 +67,6 @@ function mostrarProductos(productos) {
     });
 }
 
-// Buscar
 function buscar() {
     busqueda = document.getElementById('buscar').value;
     categoriaActual = '';
@@ -84,7 +75,6 @@ function buscar() {
     cargarProductos();
 }
 
-// Filtrar por categoría
 function filtrarCategoria() {
     categoriaActual = document.getElementById('categoria').value;
     busqueda = '';
@@ -93,14 +83,12 @@ function filtrarCategoria() {
     cargarProductos();
 }
 
-// Ordenar
 function ordenar() {
     ordenActual = document.getElementById('ordenar').value;
     salto = 0;
     cargarProductos();
 }
 
-// Paginación
 function anterior() {
     if (salto >= 10) {
         salto -= 10;
@@ -124,7 +112,6 @@ function actualizarPaginacion() {
     document.getElementById('btnSiguiente').disabled = salto + 10 >= total;
 }
 
-// Editar producto
 async function editar(id) {
     const titulo = prompt('Nuevo título:');
     const precio = prompt('Nuevo precio:');
@@ -142,7 +129,6 @@ async function editar(id) {
     }
 }
 
-// Eliminar producto
 async function eliminar(id) {
     if (confirm('¿Eliminar este producto?')) {
         await fetch(`https://dummyjson.com/products/${id}`, {
